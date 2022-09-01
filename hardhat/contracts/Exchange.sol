@@ -12,4 +12,8 @@ constructor(address _CryptoDevtoken) ERC2("CryptoDev LP Token", "CDLP"){
     cryptoDevTokenAddress = _CryptoDevtoken;
 }
 
+function getReserve() public view returns (uint) {
+    return ERC20(cryptoDevTokenAddress).balanceOf(address(this));
+}
+
 }
