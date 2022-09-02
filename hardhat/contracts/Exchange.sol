@@ -44,4 +44,24 @@ function addLiquidity(uint _amount) public payable returns(uint){
      return liquidity;
 }
 
+
+// Remove Liquidity
+
+function removeLiquidity(uint _amount) public returns (uint , uint) {
+    require(_amount > 0, "_amount should be greater than zero");
+    uint ethReserve = address(this).balance; 
+    uint _totalSupply = totalSupply();
+
+    uint ethAmount = (ethReserve * _amount)/ _totalSupply;
+    uint cryptoDevTokenAmount = (getReserve() * _amount)/ _totalSupply;
+
+    _burn(msg.sender, _amount);
+     payable(msg.sender).transfer(ethAmount);
+
+    // Transfer Token from user wallet back to Contract 
+    ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
+    return (ethAmount, cryptoDevTokenAmount);
+    
+}
+
 }
