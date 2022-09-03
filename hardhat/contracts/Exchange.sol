@@ -77,5 +77,14 @@ function getAmountOfTokens(uint256 inputAmount,uint256 inputReserve,uint256 outp
     uint256 denominator = (inputReserve * 100) + inputAmountWithFee;
     return numerator / denominator;
 }
+//? EtH TO Token Function
+function ethToCryptoDevToken(uint _minTokens) payable{
+    uint256 tokenReserve = getReserve();
+
+    uint256 tokensBought = getAmountOfTokens(msg.value,address(this).balance - msg.value,tokenReserve);
+    require(tokensBought >= _minTokens, "insufficient output amount");
+    ERC20(cryptoDevTokenAddress).transfer(msg.sender, tokensBought);
+}
+
 
 }
