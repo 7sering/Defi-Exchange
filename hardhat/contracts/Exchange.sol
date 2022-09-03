@@ -7,7 +7,7 @@ contract Exchange is ERC20 {
 
 address public cryptoDevTokenAddress;
 
-constructor(address _CryptoDevtoken) ERC2("CryptoDev LP Token", "CDLP"){
+constructor(address _CryptoDevtoken) ERC20("CryptoDev LP Token", "CDLP"){
     require(_CryptoDevtoken != address(0), "Token Address Passed is a null address ");
     cryptoDevTokenAddress = _CryptoDevtoken;
 }
@@ -78,7 +78,7 @@ function getAmountOfTokens(uint256 inputAmount,uint256 inputReserve,uint256 outp
     return numerator / denominator;
 }
 //? EtH TO Token Function
-function ethToCryptoDevToken(uint _minTokens) payable{
+function ethToCryptoDevToken(uint _minTokens) public payable{
     uint256 tokenReserve = getReserve();
 
     uint256 tokensBought = getAmountOfTokens(msg.value,address(this).balance - msg.value,tokenReserve);
